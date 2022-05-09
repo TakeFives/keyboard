@@ -56,10 +56,12 @@ body {
   }
 .keyboard-key:hover{
     cursor: pointer;
-    background-color: #333;
+    background-color: rgb(0, 119, 255);
+    border-radius: 50px;
+
   }
 .pressed{
-    background-color: #f00;
+    background-color: rgb(0, 119, 255);
     border-radius: 50px;
   }
 .text-area {

@@ -11,7 +11,7 @@ keyboard.classList.add('keyboard');
 keyboardKeys.classList.add('keyboard-keys');
 textField.classList.add('text-field');
 textArea.classList.add('text-area');
-textInfo.innerHTML = 'Клавиатура создана в операционной системе Windows'
+textInfo.innerHTML = 'Клавиатура создана в операционной системе Windows. Language = ctrl + shift'
 
 
 body.append(wrapper);
@@ -58,8 +58,8 @@ const Keyboard = {
       keyLayout = [
         'Backquote', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
         'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'х', 'ъ', 'Delete',
-        'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', `'`, 'Enter',
-        'ShiftLeft', '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 'ArrowUp', 'ShiftRight',
+        'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', `э`, 'Enter',
+        'ShiftLeft', '\\', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'ArrowUp', 'ShiftRight',
         'ControlLeft', 'Meta', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'
       ];
       makeKeysByLang();
