@@ -209,11 +209,9 @@ document.addEventListener('keydown', function (event) {
   const element = document.querySelector(`[data-letter="${keyPressed}"]`) || document.querySelector(`[data-letter="${codePressed}"]`);
 
   if (element) {
-    // console.log(element)
     element.classList.add('pressed');
-    textArea.value = textArea.value + element.value;
+    textArea.focus();
   }
-
 
 });
 document.addEventListener('keyup', function (event) {
