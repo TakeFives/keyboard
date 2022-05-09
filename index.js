@@ -29,169 +29,193 @@ const Keyboard = {
 
   properties: {
     value: "",
-    capsLock: false
+    lang: 'en'
   },
 
   init() {
     this.elements.keys = keyboardKeys.querySelectorAll(".keyboard-key");
     keyboard.appendChild(keyboardKeys);
+    keyboardKeys.innerHTML = '';
     keyboardKeys.appendChild(this.createKeys());
   },
 
   createKeys() {
     const fragment = document.createDocumentFragment();
-    const keyLayout = [
-      'Backquote', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
-      'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Delete',
-      'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', `'`, 'Enter',
-      'ShiftLeft', '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 'ArrowUp', 'ShiftRight',
-      'ControlLeft', 'Meta', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'
-    ];
+    let keyLayout = [];
 
-    keyLayout.forEach(key => {
-      const keyElement = document.createElement("button");
 
-      // Add attributes/classes
-      keyElement.setAttribute('type', 'button');
-      keyElement.classList.add("keyboard-key");
+    if (Keyboard.properties.lang === 'en') {
+      keyLayout = [
+        'Backquote', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
+        'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Delete',
+        'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', `'`, 'Enter',
+        'ShiftLeft', '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 'ArrowUp', 'ShiftRight',
+        'ControlLeft', 'Meta', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'
+      ];
+      makeKeysByLang();
+    } else
+    if (Keyboard.properties.lang === 'ru') {
+      keyLayout = [
+        'Backquote', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
+        'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'х', 'ъ', 'Delete',
+        'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', `'`, 'Enter',
+        'ShiftLeft', '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 'ArrowUp', 'ShiftRight',
+        'ControlLeft', 'Meta', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'
+      ];
+      makeKeysByLang();
+    }
 
-      keyElement.dataset.letter = key;
+    
+    function makeKeysByLang() {
+      keyLayout.forEach(key => {
+        const keyElement = document.createElement("button");
 
-      const insertLineBreak = ["Backspace", "Delete", "Enter", "Shift"].indexOf(key) !== -1;
+        keyElement.setAttribute('type', 'button');
+        keyElement.classList.add("keyboard-key");
 
-      switch (key) {
-        case 'Backquote':
-          keyElement.classList.add("backquote", 'min-width');
-          keyElement.innerHTML = '`';
-          keyElement.addEventListener("click", () => {
-            textArea.value += '`';
-          });
-          break;
-        case "Backspace":
-          keyElement.classList.add("backspace");
-          keyElement.innerHTML = 'backspace';
-          keyElement.addEventListener("click", () => {
-            textArea.value = textArea.value.substring(0, textArea.value.length - 1);
-          });
-          break;
+        keyElement.dataset.letter = key;
 
-        case "Tab":
-          keyElement.classList.add("tab");
-          keyElement.innerHTML = 'tab';
+        const insertLineBreak = ["Backspace", "Delete", "Enter", "Shift"].indexOf(key) !== -1;
 
-          break;
-        case "Delete":
-          keyElement.classList.add("del");
-          keyElement.innerHTML = 'del';
-          keyElement.addEventListener("click", () => {
-            textArea.value = '';
-          });
-          break;
+        switch (key) {
+          case 'Backquote':
+            keyElement.classList.add("backquote", 'min-width');
+            keyElement.innerHTML = '`';
+            keyElement.addEventListener("click", () => {
+              textArea.value += '`';
+            });
+            break;
+          case "Backspace":
+            keyElement.classList.add("backspace");
+            keyElement.innerHTML = 'backspace';
+            keyElement.addEventListener("click", () => {
+              textArea.value = textArea.value.substring(0, textArea.value.length - 1);
+            });
+            break;
 
-        case "CapsLock":
-          keyElement.classList.add("caps-lock", "key-active", 'lrg-width');
-          keyElement.innerHTML = 'caps lock';
-          break;
+          case "Tab":
+            keyElement.classList.add("tab");
+            keyElement.innerHTML = 'tab';
 
-        case "Enter":
-          keyElement.classList.add("enter", 'lrg-width');
-          keyElement.innerHTML = 'enter';
-          keyElement.addEventListener('click', () => {
-            textArea.value += "\n";
-          })
-          break;
+            break;
+          case "Delete":
+            keyElement.classList.add("del");
+            keyElement.innerHTML = 'del';
+            keyElement.addEventListener("click", () => {
+              textArea.value = '';
+            });
+            break;
 
-        case "ShiftLeft":
-          keyElement.classList.add("shift", 'med-width');
-          keyElement.innerHTML = 'shift';
+          case "CapsLock":
+            keyElement.classList.add("caps-lock", "key-active", 'lrg-width');
+            keyElement.innerHTML = 'caps lock';
+            break;
 
-          break;
-        case "ShiftRight":
-          keyElement.classList.add("shift");
-          keyElement.innerHTML = 'shift';
+          case "Enter":
+            keyElement.classList.add("enter", 'lrg-width');
+            keyElement.innerHTML = 'enter';
+            keyElement.addEventListener('click', () => {
+              textArea.value += "\n";
+            })
+            break;
 
-          break;
-        case "ControlLeft":
-          keyElement.classList.add("ctrl", 'med-width');
-          keyElement.innerHTML = 'ctrl';
+          case "ShiftLeft":
+            keyElement.classList.add("shift", 'med-width');
+            keyElement.innerHTML = 'shift';
+            keyElement.addEventListener('click', () => {
+              
+            })
+                    
+            break;
+          case "ShiftRight":
+            keyElement.classList.add("shift");
+            keyElement.innerHTML = 'shift';
 
-          break;
-        case "ControlRight":
-          keyElement.classList.add("ctrl", 'med-width');
-          keyElement.innerHTML = 'ctrl';
-          break;
+            break;
+          case "ControlLeft":
+            keyElement.classList.add("ctrl", 'med-width');
+            keyElement.innerHTML = 'ctrl';
 
-        case "Meta":
-          keyElement.classList.add("win", 'min-width');
-          keyElement.innerHTML = 'win';
-          break;
+            break;
+          case "ControlRight":
+            keyElement.classList.add("ctrl", 'med-width');
+            keyElement.innerHTML = 'ctrl';
+            break;
 
-        case "AltLeft":
-          keyElement.classList.add("alt", 'med-width');
-          keyElement.innerHTML = 'alt';
-          break;
+          case "Meta":
+            keyElement.classList.add("win", 'min-width');
+            keyElement.innerHTML = 'win';
+            break;
 
-        case "AltRight":
-          keyElement.classList.add("alt", 'med-width');
-          keyElement.innerHTML = 'alt';
-          break;
+          case "AltLeft":
+            keyElement.classList.add("alt", 'med-width');
+            keyElement.innerHTML = 'alt';
+            break;
 
-        case "Space":
-          keyElement.classList.add("space", 'max-width');
-          keyElement.innerHTML = '<i class="fa-solid fa-horizontal-rule"></i>';
-          keyElement.addEventListener('click', () => {
-            textArea.value += ' '
-          })
-          break;
+          case "AltRight":
+            keyElement.classList.add("alt", 'med-width');
+            keyElement.innerHTML = 'alt';
+            break;
 
-        case "ArrowUp":
-          keyElement.classList.add("up");
-          keyElement.innerHTML = '<i class="fa-solid fa-angle-up"></i>';
-          keyElement.addEventListener('click', () => {
-            textArea.value += '\u2191';
-          })
-          break;
+          case "Space":
+            keyElement.classList.add("space", 'max-width');
+            keyElement.innerHTML = '<i class="fa-solid fa-horizontal-rule"></i>';
+            keyElement.addEventListener('click', () => {
+              textArea.value += ' '
+            })
+            break;
 
-        case "ArrowDown":
-          keyElement.classList.add("down");
-          keyElement.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
-          keyElement.addEventListener('click', () => {
-            textArea.value += '\u2193';
-          })
-          break;
+          case "ArrowUp":
+            keyElement.classList.add("up");
+            keyElement.innerHTML = '<i class="fa-solid fa-angle-up"></i>';
+            keyElement.addEventListener('click', () => {
+              textArea.value += '\u2191';
+            })
+            break;
 
-        case "ArrowLeft":
-          keyElement.classList.add("left");
-          keyElement.innerHTML = '<i class="fa-solid fa-angle-left"></i>';
-          keyElement.addEventListener('click', () => {
-            textArea.value += '\u2190';
-          })
-          break;
+          case "ArrowDown":
+            keyElement.classList.add("down");
+            keyElement.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+            keyElement.addEventListener('click', () => {
+              textArea.value += '\u2193';
+            })
+            break;
 
-        case "ArrowRight":
-          keyElement.classList.add("right");
-          keyElement.innerHTML = '<i class="fa-solid fa-angle-right"></i>';
-          keyElement.addEventListener('click', () => {
-            textArea.value += '\u2192';
-          })
-          break;
+          case "ArrowLeft":
+            keyElement.classList.add("left");
+            keyElement.innerHTML = '<i class="fa-solid fa-angle-left"></i>';
+            keyElement.addEventListener('click', () => {
+              textArea.value += '\u2190';
+            })
+            break;
 
-        default:
-          keyElement.textContent = key.toLowerCase();
+          case "ArrowRight":
+            keyElement.classList.add("right");
+            keyElement.innerHTML = '<i class="fa-solid fa-angle-right"></i>';
+            keyElement.addEventListener('click', () => {
+              textArea.value += '\u2192';
+            })
+            break;
 
-          keyElement.addEventListener("click", () => {
-            textArea.value = textArea.value + keyElement.innerHTML;
-          });
-          break;
-      }
+          default:
+            keyElement.textContent = key.toLowerCase();
 
-      fragment.appendChild(keyElement);
+            keyElement.addEventListener("click", () => {
+              textArea.value = textArea.value + keyElement.innerHTML;
+            });
+            break;
 
-      if (insertLineBreak) {
-        fragment.appendChild(document.createElement("br"));
-      }
+            
+        }
 
-    });
+        fragment.appendChild(keyElement);
+
+        if (insertLineBreak) {
+          fragment.appendChild(document.createElement("br"));
+        }
+
+      });
+    }
 
     return fragment;
   },
@@ -203,6 +227,8 @@ window.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener('keydown', function (event) {
 
+  console.log(event)
+
   const keyPressed = event.key;
   const codePressed = event.code;
 
@@ -211,6 +237,11 @@ document.addEventListener('keydown', function (event) {
   if (element) {
     element.classList.add('pressed');
     textArea.focus();
+  }
+
+  if(keyPressed === 'Shift' && event.ctrlKey === true || keyPressed === 'Control' && event.shiftKey === true) {
+    Keyboard.properties.lang = Keyboard.properties.lang === 'ru' ? 'en' : 'ru';
+    Keyboard.init()
   }
 
 });
@@ -225,3 +256,4 @@ document.addEventListener('keyup', function (event) {
     element.classList.remove('pressed');
   }
 });
+
