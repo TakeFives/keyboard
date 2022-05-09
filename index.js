@@ -29,7 +29,9 @@ const Keyboard = {
 
   properties: {
     value: "",
-    lang: 'en'
+    lang: 'en',
+    caps: false,
+    shift: false
   },
 
   init() {
@@ -45,27 +47,45 @@ const Keyboard = {
 
 
     if (Keyboard.properties.lang === 'en') {
+      if( Keyboard.properties.shift === false) {
       keyLayout = [
         'Backquote', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
         'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Delete',
         'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', `'`, 'Enter',
         'ShiftLeft', '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?', 'ArrowUp', 'ShiftRight',
         'ControlLeft', 'Meta', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'
-      ];
+      ];} else {        
+        keyLayout = [
+          '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace',
+          'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Delete',
+          'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', `"`, 'Enter',
+          'ShiftLeft', '|', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', 'ArrowUp', 'ShiftRight',
+          'ControlLeft', 'Meta', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'
+        ];
+      }
       makeKeysByLang();
+      
     } else
     if (Keyboard.properties.lang === 'ru') {
+      if( Keyboard.properties.shift === false){
       keyLayout = [
         'Backquote', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
-        'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'х', 'ъ', 'Delete',
+        'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'х', '/', 'Delete',
         'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', `э`, 'Enter',
         'ShiftLeft', '\\', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'ArrowUp', 'ShiftRight',
         'ControlLeft', 'Meta', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'
-      ];
+      ];} else{
+        keyLayout = [
+          'Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace',
+          'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'Delete',
+          'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter',
+          'ShiftLeft', '/', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', 'ArrowUp', 'ShiftRight',
+          'ControlLeft', 'Meta', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'
+        ];
+      }
       makeKeysByLang();
     }
-
-    
+   
     function makeKeysByLang() {
       keyLayout.forEach(key => {
         const keyElement = document.createElement("button");
@@ -123,7 +143,9 @@ const Keyboard = {
             keyElement.classList.add("shift", 'med-width');
             keyElement.innerHTML = 'shift';
             keyElement.addEventListener('click', () => {
-              
+              keyElement.classList.add('active');
+              Keyboard.properties.shift = Keyboard.properties.shift === false ? true : false;
+              Keyboard.init();
             })
                     
             break;
@@ -198,7 +220,7 @@ const Keyboard = {
             break;
 
           default:
-            keyElement.textContent = key.toLowerCase();
+            keyElement.textContent = key;
 
             keyElement.addEventListener("click", () => {
               textArea.value = textArea.value + keyElement.innerHTML;
@@ -240,6 +262,10 @@ document.addEventListener('keydown', function (event) {
   }
 
   if(keyPressed === 'Shift' && event.ctrlKey === true || keyPressed === 'Control' && event.shiftKey === true) {
+    Keyboard.properties.lang = Keyboard.properties.lang === 'ru' ? 'en' : 'ru';
+    Keyboard.init()
+  }
+  if(keyPressed === 'CapsLock') {
     Keyboard.properties.lang = Keyboard.properties.lang === 'ru' ? 'en' : 'ru';
     Keyboard.init()
   }
