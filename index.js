@@ -168,13 +168,7 @@ const Keyboard = {
                     keyElement.addEventListener("click", () => {
                         textArea.value = textArea.value + keyElement.innerHTML;
                     });
-                    // keyElement.addEventListener("mousedown", () => {
-                    //     keyElement.classList.add('pressed');
-                    // });
-                    // keyElement.addEventListener("mouseup", () => {
-                    //     keyElement.classList.remove('pressed');
-                    // });
-
+                    
                     break;
             }
 
